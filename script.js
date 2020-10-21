@@ -32,9 +32,9 @@ function drawFood(){
     context.fillRect(food.x, food.y, box, box);
 }
 
+//Identifica a tecla pressionada pelo jogador e atualiza a direção da cobrinha
 document.addEventListener('keydown', update);
 
-//Função que identifica a tecla pressionada pelo jogador e atualiza a direção da cobrinha
 function update(event){
     if((event.keyCode == 37) && (direction != "right")) direction = "left";
     if((event.keyCode == 38) && (direction != "down")) direction = "up";
@@ -42,6 +42,7 @@ function update(event){
     if((event.keyCode == 40) && (direction != "up")) direction = "down";
 }
 
+//Inicia o jogo
 function iniciarJogo(){
 
     //Faz a cobrinha reaparecer do outro lado da telacaso chegue na borda
@@ -63,7 +64,13 @@ function iniciarJogo(){
     if(direction == "up") snakeY -= box;
     if(direction == "down") snakeY += box;
 
-    snake.pop();
+    //Verifica se a cobrinha comeu a comidinha
+    if((snakeX != food.x) || (snakeY != food.y)){
+        snake.pop();
+    }else{
+        food.x = Math.floor(Math.random() * 15 + 1) * box;
+        food.y = Math.floor(Math.random() * 15 + 1) * box;
+    }
 
     let newHead = {
         x: snakeX,
